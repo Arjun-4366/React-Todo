@@ -11,8 +11,12 @@ import {
   Row,
 } from "react-bootstrap";
 import { Trash } from "react-bootstrap-icons";
+import { tabs } from "./data/tabs";
 function App() {
   let [todoList, setTodoList] = useState([]);
+  let [aciveTabs, setActiveTabs] = useState(0);
+  let [activeContent, setActiveContents] = useState(tabs[0]);
+
   let todoSubmit = (e) => {
     e.preventDefault();
     let todoValue = e.target.todoValue.value;
@@ -35,10 +39,27 @@ function App() {
       />
     );
   });
-
+  let changeData = (i) => {
+    setActiveTabs(i);
+    setActiveContents(tabs[i]);
+  };
   return (
     <div className="App">
-      <section className="vh-100" style={{ backgroundColor: "#e2d5de" }}>
+      <section className="vh-100 p-5" style={{ backgroundColor: "#e2d5de" }}>
+        <div className="d-flex align-items-center justify-content-center  gap-3">
+          {tabs.map((items, i) => {
+            return (
+              <Button
+                onClick={() => changeData(i)}
+                className={aciveTabs == i ? "bg-success" : ""}>
+                {items.title}
+              </Button>
+            );
+          })}
+        </div>
+
+        <p className="text-center mt-2  ">{activeContent.description}</p>
+
         <Container className=" py-5 h-100">
           <Row className=" d-flex justify-content-center align-items-center h-100">
             <Col className="xl-10">
